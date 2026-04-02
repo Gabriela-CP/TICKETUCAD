@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Ruta amigable para el login
+RewriteRule ^inicio-sesion/?$ /TICKET_UCAD/app/views/pages/login.html [L,NC]
