@@ -36,20 +36,24 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     document.getElementById('loginForm').reset();
 
     if (match) {
-        Swal.fire({
-            icon: 'success',
-            title: '¡Bienvenido!',
-            text: `Sesión iniciada como ${usuario}`,
-            background: '#0d1528',
-            color: '#e2e8f0',
-            confirmButtonColor: '#2563eb',
-            confirmButtonText: 'Continuar',
-            timer: 2000,
-            timerProgressBar: true,
-            showConfirmButton: false
-        }).then(() => {
-            window.location.href = 'panel-administrador';
-        });
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Bienvenido!',
+                text: `Sesión iniciada como ${usuario}`,
+                background: '#0d1528',
+                color: '#e2e8f0',
+                confirmButtonColor: '#2563eb',
+                confirmButtonText: 'Continuar',
+                timer: 1200,
+                timerProgressBar: true,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = '/TICKETUCAD/panel-administrador';
+            });
+        } else {
+            window.location.href = '/TICKETUCAD/panel-administrador';
+        }
     } else {
         Swal.fire({
             icon: 'error',
