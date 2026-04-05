@@ -1,158 +1,10 @@
 <!doctype html>
-<html lang="en">
-<<<<<<< HEAD
-
+<html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Login | Nalika - Admin Dashboard</title>
+    <title>Inicio de Sesión | Ticket UCAD</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../recursos/img/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <style>
-        body {
-            background: #152036;
-            font-family: 'Roboto', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .nk-auth-card {
-            background: #1b2a47;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            width: 100%;
-            max-width: 420px;
-            padding: 40px;
-        }
-        .nk-auth-logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 1px;
-        }
-        .nk-auth-logo span {
-            color: #03a9f4;
-        }
-        .nk-auth-card .form-control {
-            background: #152036;
-            border: 1px solid #253a5c;
-            color: #fff;
-            border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 14px;
-        }
-        .nk-auth-card .form-control:focus {
-            border-color: #03a9f4;
-            box-shadow: 0 0 0 2px rgba(3,169,244,0.15);
-            background: #152036;
-            color: #fff;
-        }
-        .nk-auth-card .form-control::placeholder { color: #6c7a8d; }
-        .nk-auth-card .form-label { color: #8a9bb5; font-size: 13px; font-weight: 500; }
-        .nk-auth-card .form-text { color: #5a6a7f; }
-        .nk-auth-card .form-check-label { color: #8a9bb5; font-size: 13px; }
-        .nk-auth-card .form-check-input {
-            background-color: #253a5c;
-            border-color: #253a5c;
-        }
-        .nk-auth-card .form-check-input:checked {
-            background-color: #03a9f4;
-            border-color: #03a9f4;
-        }
-        .btn-nk-primary {
-            background: #03a9f4;
-            border: none;
-            color: #fff;
-            border-radius: 8px;
-            padding: 10px;
-            font-weight: 500;
-            font-size: 15px;
-            transition: background 0.2s;
-        }
-        .btn-nk-primary:hover { background: #0290d1; color: #fff; }
-        .btn-nk-outline {
-            background: transparent;
-            border: 1px solid #253a5c;
-            color: #8a9bb5;
-            border-radius: 8px;
-            padding: 10px;
-            font-size: 14px;
-            transition: all 0.2s;
-        }
-        .btn-nk-outline:hover { border-color: #03a9f4; color: #03a9f4; }
-        .nk-auth-footer { color: #5a6a7f; font-size: 13px; }
-        .nk-auth-footer a { color: #03a9f4; text-decoration: none; }
-        .nk-auth-footer a:hover { text-decoration: underline; }
-        .nk-divider {
-            display: flex;
-            align-items: center;
-            color: #5a6a7f;
-            font-size: 12px;
-            margin: 20px 0;
-        }
-        .nk-divider::before, .nk-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: #253a5c;
-        }
-        .nk-divider span { padding: 0 12px; }
-    </style>
-</head>
-
-<body>
-    <div class="text-center px-3 w-100">
-        <div class="nk-auth-card mx-auto mb-4">
-            <div class="nk-auth-logo mb-2">N<span>alika</span></div>
-            <p class="text-secondary mb-4" style="font-size:14px;">Sign in to your dashboard</p>
-
-            <form action="#" id="loginForm">
-                <div class="mb-3 text-start">
-                    <label class="form-label" for="username">Email</label>
-                    <input type="email" id="username" name="username" class="form-control" placeholder="you@example.com" required>
-                </div>
-                <div class="mb-3 text-start">
-                    <label class="form-label d-flex justify-content-between" for="password">
-                        Password
-                        <a href="../pages/password-recovery.html" class="text-decoration-none" style="color:#03a9f4; font-size:12px;">Forgot password?</a>
-                    </label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
-                </div>
-                <div class="mb-4 text-start">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="remember">
-                        <label class="form-check-label" for="remember">Remember me</label>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-nk-primary w-100 mb-3">Sign In</button>
-                <div class="nk-divider"><span>or</span></div>
-                <a href="../pages/register.html" class="btn btn-nk-outline w-100">Create an account</a>
-            </form>
-        </div>
-
-        <a href="../dashboard/index.html" class="text-decoration-none" style="color:#5a6a7f; font-size:13px;">
-            <i class="bi bi-arrow-left me-1"></i>Back to Dashboard
-        </a>
-
-        <div class="nk-auth-footer mt-4">
-            <p>&copy; 2026 <a href="https://colorlib.com/wp/templates/">Colorlib</a>. All rights reserved.</p>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
-
-=======
-<head>
-    <meta charset="utf-8">
-    <title>Login | Ticket UCAD</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -160,285 +12,606 @@
         html, body {
             width: 100%;
             height: 100%;
-            overflow-x: hidden;
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            min-height: 100vh;
-            background: #99c8f8;
-            display: flex;
-        }
-
-        /* ===== LEFT PANEL ===== */
-        .panel-left {
-            width: 50%;
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 32px;
-            background: #08346b;
+            background: #0a0f1e;
+            overflow: hidden;
         }
 
-        /* Glass card */
-        .card {
+        /* ── FONDO ANIMADO ── */
+        .bg-animated {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at 20% 50%, #0d2a6e22 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, #1a4fa822 0%, transparent 55%),
+                        radial-gradient(ellipse at 60% 80%, #0b3d9122 0%, transparent 50%),
+                        #0a0f1e;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            animation: float 8s ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #1e5fd4, #0a2a7a);
+            top: -150px; left: -100px;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #0e3fa8, #071e5c);
+            bottom: -100px; right: 30%;
+            animation-delay: 3s;
+        }
+        .orb-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, #2563eb, #1040a0);
+            top: 40%; right: -80px;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50%       { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* ── GRID PRINCIPAL ── */
+        .layout {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr 420px;
             width: 100%;
-            max-width: 500px;
-            background: rgba(255,255,255,0.18);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border: 1.5px solid rgba(255,255,255,0.45);
-            border-radius: 28px;
-            padding: 56px 52px;
-            box-shadow:
-                0 0 50px rgba(80,160,255,0.25),
-                0 8px 32px rgba(0,50,120,0.18),
-                inset 0 1px 0 rgba(255,255,255,0.5);
+            min-height: 100vh;
+        }
+
+        /* ── PANEL IZQUIERDO (info) ── */
+        .panel-info {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Logo */
-        .logo-ring {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.7);
-            background: rgba(255,255,255,0.12);
+        /* Sección superior: logo + texto */
+        .panel-top {
+            flex: 1;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            margin-bottom: 36px;
-            box-shadow: 0 0 28px rgba(100,180,255,0.55);
+            padding: 48px 60px 32px;
         }
 
-        .logo-ring img {
-            width: 92px;
-            height: 92px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 8px rgba(100,180,255,0.8));
-        }
-
-        /* Inputs */
-        .field {
-            width: 100%;
+        .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            background: rgba(8,52,107,0.5);
-            border: 1px solid rgba(100,180,255,0.3);
-            border-radius: 8px;
-            padding: 13px 16px;
-            margin-bottom: 14px;
+            gap: 16px;
+            margin-bottom: 44px;
         }
 
-        .field i {
-            color: rgba(180,220,255,0.85);
-            font-size: 16px;
+        .brand-logo {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 12px rgba(77,159,255,0.45));
             flex-shrink: 0;
         }
 
-        .field input {
-            background: transparent;
-            border: none;
-            outline: none;
+        .brand-text .brand-name {
+            font-size: 28px;
+            font-weight: 700;
             color: #fff;
-            font-size: 15px;
-            width: 100%;
-            font-family: 'Roboto', sans-serif;
+            letter-spacing: 1px;
+            line-height: 1.1;
         }
 
-        .field input::placeholder { color: rgba(180,220,255,0.6); }
+        .brand-text .brand-sub {
+            font-size: 12px;
+            color: #4d7aaa;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
 
-        .field select {
-            background: transparent;
-            border: none;
-            outline: none;
+        .info-headline {
+            font-size: 40px;
+            font-weight: 700;
             color: #fff;
-            font-size: 15px;
+            line-height: 1.18;
+            margin-bottom: 16px;
+        }
+
+        .info-headline span {
+            background: linear-gradient(90deg, #4d9fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .info-sub {
+            font-size: 14px;
+            color: #5a7a9a;
+            line-height: 1.75;
+            max-width: 380px;
+            margin-bottom: 36px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 28px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-num {
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #3a5a7a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: #1a2d4a;
+            align-self: stretch;
+        }
+
+        /* Video panorámico en la parte inferior */
+        .video-banner {
+            height: 220px;
+            position: relative;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .video-banner video {
             width: 100%;
-            font-family: 'Roboto', sans-serif;
-            cursor: pointer;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-banner-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                #0a0f1e 0%,
+                rgba(10,15,30,0.5) 30%,
+                rgba(10,15,30,0.2) 60%,
+                rgba(10,15,30,0.6) 100%
+            );
+        }
+
+        .video-banner-label {
+            position: absolute;
+            bottom: 20px;
+            left: 28px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .video-banner-label .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4d9fff;
+            box-shadow: 0 0 8px #4d9fff;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .video-banner-label span {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.5px;
+        }
+
+        /* ── PANEL DERECHO (form) ── */
+        .panel-form {
+            width: 420px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 40px;
+            background: rgba(15, 25, 50, 0.85);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(24px);
+            box-shadow: -8px 0 40px rgba(0,0,0,0.4);
+        }
+
+        .form-inner {
+            width: 100%;
+        }
+
+        .form-header {
+            margin-bottom: 28px;
+        }
+
+        .form-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .form-header p {
+            font-size: 13px;
+            color: #7a90aa;
+        }
+
+        /* Campos */
+        .field-group {
+            margin-bottom: 14px;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6d9acc;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+        }
+
+        .field-wrap {
+            position: relative;
+        }
+
+        .field-wrap i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2d5a8a;
+            font-size: 15px;
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .field-wrap input,
+        .field-wrap select {
+            width: 100%;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 13px 16px 13px 44px;
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
             appearance: none;
             -webkit-appearance: none;
         }
 
-        .field select option {
-            background: #08346b;
+        .field-wrap input::placeholder { color: #4a6a8a; }
+
+        .field-wrap select option {
+            background: #0d1b35;
             color: #fff;
         }
 
-        .field select option[value=""] { color: rgba(180,220,255,0.6); }
+        .field-wrap input:focus,
+        .field-wrap select:focus {
+            border-color: #2563eb;
+            background: rgba(37,99,235,0.06);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+        }
 
-        /* Remember / Forgot */
-        .row-meta {
-            width: 100%;
+        .field-wrap:focus-within i {
+            color: #4d9fff;
+        }
+
+        /* Toggle password */
+        .toggle-pass {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #2d5a8a;
+            cursor: pointer;
+            font-size: 15px;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+        .toggle-pass:hover { color: #4d9fff; }
+
+        /* Opciones */
+        .form-options {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 6px 0 24px;
+            margin: 4px 0 20px;
         }
 
-        .row-meta label {
+        .check-label {
             display: flex;
             align-items: center;
-            gap: 7px;
+            gap: 8px;
             font-size: 13px;
-            color: rgba(210,235,255,0.85);
+            color: #7a90aa;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .check-label input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #2563eb;
             cursor: pointer;
         }
 
-        .row-meta input[type="checkbox"] { accent-color: #64b4ff; }
-
-        .row-meta a {
-            font-size: 13px;
-            color: rgba(210,235,255,0.75);
-            text-decoration: none;
-        }
-        .row-meta a:hover { color: #fff; }
-
-        /* Button */
-        .btn-login {
+        /* Botón */
+        .btn-submit {
             width: 100%;
             padding: 14px;
-            border: 1px solid rgba(100,180,255,0.35);
-            border-radius: 8px;
-            background: rgba(8,52,107,0.75);
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #1e5fd4, #2563eb);
             color: #fff;
             font-size: 15px;
             font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(45,95,154,0.5);
-            transition: all 0.2s;
-        }
-        .btn-login:hover {
-            background: rgba(8,52,107,0.95);
-            box-shadow: 0 0 32px rgba(100,180,255,0.5);
-        }
-
-        /* ===== RIGHT PANEL ===== */
-        .panel-right {
-            width: 50%;
-            min-height: 100vh;
             position: relative;
             overflow: hidden;
-            background: #08346b;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 4px 24px rgba(37,99,235,0.4);
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-50%) translateX(160px); }
-            to   { opacity: 1; transform: translateY(-50%) translateX(0); }
-        }
-
-        .big-circle {
+        .btn-submit::before {
+            content: '';
             position: absolute;
-            width: 115vmin;
-            height: 115vmin;
-            border-radius: 50%;
-            overflow: hidden;
-            right: -30vmin;
-            top: 50%;
-            transform: translateY(-50%);
-            animation: slideIn 1.1s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
-            box-shadow:
-                0 0 80px rgba(45,95,154,0.35);
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+            opacity: 0;
+            transition: opacity 0.2s;
         }
 
-        .big-circle video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 32px rgba(37,99,235,0.55);
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            body { flex-direction: column; }
+        .btn-submit:hover::before { opacity: 1; }
+        .btn-submit:active { transform: translateY(0); }
 
-            .panel-left {
+        .btn-submit .btn-icon {
+            margin-left: 8px;
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:hover .btn-icon {
+            transform: translateX(4px);
+        }
+
+        /* Separador */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0;
+            color: #1e3050;
+            font-size: 12px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        /* Footer del form */
+        .form-footer {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .form-footer p {
+            font-size: 12px;
+            color: #4a6a8a;
+        }
+
+        /* Indicador de seguridad */
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(37,99,235,0.08);
+            border: 1px solid rgba(37,99,235,0.15);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-top: 16px;
+        }
+
+        .security-badge i {
+            color: #4d9fff;
+            font-size: 14px;
+        }
+
+        .security-badge span {
+            font-size: 12px;
+            color: #4d7aaa;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            .panel-info { display: none; }
+            .layout { grid-template-columns: 1fr; }
+            .panel-form {
                 width: 100%;
-                min-height: 100vh;
+                border-left: none;
             }
-
-            .panel-right { display: none; }
-        }
-
-        @media (min-width: 769px) and (max-width: 1100px) {
-            .circle-logo img { width: 220px; height: 220px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="panel-left">
-        <div class="card">
+    <div class="bg-animated">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
-            <div class="logo-ring">
-                <img src="/TICKET_UCAD/media/img/logo.png" alt="Logo">
+    <div class="layout">
+
+        <!-- Panel izquierdo -->
+        <div class="panel-info">
+
+            <div class="panel-top">
+                <div class="brand">
+                    <img src="/TICKET_UCAD/media/img/logo.png" alt="Logo" class="brand-logo">
+                    <div class="brand-text">
+                        <div class="brand-name">TICKET UCAD</div>
+                        <div class="brand-sub">Soporte IT</div>
+                    </div>
+                </div>
+
+                <h1 class="info-headline">
+                    Gestión avanzada y <br>resolución de incidentes<br><span>en tiempo real.</span>
+                </h1>
+
+                
+
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <span class="stat-num">99%</span>
+                        <span class="stat-label">Resolución</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-num">24/5</span>
+                        <span class="stat-label">Disponible</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-num">+500</span>
+                        <span class="stat-label">Tickets</span>
+                    </div>
+                </div>
             </div>
 
-            <form style="width:100%" id="loginForm" action="#" method="post">
-
-                <div class="field">
-                    <i class="bi bi-shield-fill"></i>
-                    <select id="rol" name="rol" required>
-                        <option value="" disabled selected>Rol</option>
-                        <option value="agente_it">Agente IT</option>
-                        <option value="admin">Admin</option>
-                    </select>
+            <div class="video-banner">
+                <video autoplay muted loop playsinline>
+                    <source src="/TICKET_UCAD/media/img/vid1.mp4" type="video/mp4">
+                </video>
+                <div class="video-banner-overlay"></div>
+                <div class="video-banner-label">
+                    <div class="dot"></div>
+                    <span>Sistema activo en tiempo real</span>
                 </div>
-
-                <div class="field">
-                    <i class="bi bi-person-fill"></i>
-                    <input type="text" id="usuario" name="usuario" placeholder="Usuario" required>
-                </div>
-
-                <div class="field">
-                    <i class="bi bi-lock-fill"></i>
-                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
-                </div>
-
-                <div class="row-meta">
-                    <label>
-                        <input type="checkbox" id="showPass" onchange="document.getElementById('password').type = this.checked ? 'text' : 'password'"> Ver contraseña
-                    </label>
-                </div>
-
-                <button type="submit" class="btn-login">Entrar</button>
-
-            </form>
+            </div>
 
         </div>
-    </div>
 
-    <div class="panel-right">
-        <div class="big-circle">
-            <video autoplay muted loop playsinline>
-                <source src="/TICKET_UCAD/media/img/vid1.mp4" type="video/mp4">
-            </video>
+        <!-- Panel derecho (formulario) -->
+        <div class="panel-form">
+            <div class="form-inner">
+
+                
+
+                <form id="loginForm" action="#" method="post">
+
+                    <div class="form-header">
+                        <h2>Bienvenido de nuevo</h2>
+                        <p>Ingresa tus credenciales para continuar</p>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="rol">Rol</label>
+                        <div class="field-wrap">
+                            <i class="bi bi-shield-fill"></i>
+                            <select id="rol" name="rol" required>
+                                <option value="" disabled selected>Selecciona tu rol</option>
+                                <option value="agente_it">Agente IT</option>
+                                <option value="admin">Administrador</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="usuario">Usuario</label>
+                        <div class="field-wrap">
+                            <i class="bi bi-person-fill"></i>
+                            <input type="text" id="usuario" name="usuario" placeholder="Tu nombre de usuario" required>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label class="field-label" for="password">Contraseña</label>
+                        <div class="field-wrap">
+                            <i class="bi bi-lock-fill"></i>
+                            <input type="password" id="password" name="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="check-label">
+                            <input type="checkbox" id="showPass"> Ver contraseña
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        Iniciar sesión <i class="bi bi-arrow-right btn-icon"></i>
+                    </button>
+
+                </form>
+
+                <div class="form-footer">
+                    <p>&copy; 2026 Ticket UCAD. Todos los derechos reservados.</p>
+                </div>
+
+            </div>
         </div>
+
     </div>
 
+    <script>
+        // URL amigable
+        if (window.location.pathname !== '/TICKET_UCAD/inicio-sesion') {
+            window.history.replaceState(null, 'Inicio de Sesión', '/TICKET_UCAD/inicio-sesion');
+        }
 
-<script>
-    // URL amigable al cargar la página (mantiene el prefijo del proyecto)
-    if (window.location.pathname !== '/TICKET_UCAD/inicio-sesion') {
-        window.history.replaceState(null, 'Inicio de Sesión', '/TICKET_UCAD/inicio-sesion');
-    }
+        // Toggle contraseña con checkbox
+        document.getElementById('showPass').addEventListener('change', function () {
+            document.getElementById('password').type = this.checked ? 'text' : 'password';
+        });
 
-    // Evitar que los datos del formulario aparezcan en la URL
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Aquí va tu lógica de autenticación
-    });
-</script>
+        // Submit
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Aquí va tu lógica de autenticación
+        });
+    </script>
 </body>
 </html>
->>>>>>> e310d02 (creacion del login y el archivo .htaccess para la ruta Amigable)
