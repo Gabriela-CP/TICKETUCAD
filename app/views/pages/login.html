@@ -490,7 +490,7 @@
 
             <div class="panel-top">
                 <div class="brand">
-                    <img src="/TICKET_UCAD/media/img/logo.png" alt="Logo" class="brand-logo">
+                    <img src="/TICKETUCAD/media/img/logo.png" alt="Logo" class="brand-logo">
                     <div class="brand-text">
                         <div class="brand-name">TICKET UCAD</div>
                         <div class="brand-sub">Soporte IT</div>
@@ -523,7 +523,7 @@
 
             <div class="video-banner">
                 <video autoplay muted loop playsinline>
-                    <source src="/TICKET_UCAD/media/img/vid1.mp4" type="video/mp4">
+                    <source src="/TICKETUCAD/media/video/vid1.mp4" type="video/mp4">
                 </video>
                 <div class="video-banner-overlay"></div>
                 <div class="video-banner-label">
@@ -598,20 +598,11 @@
 
     <script>
         // URL amigable
-        if (window.location.pathname !== '/TICKET_UCAD/inicio-sesion') {
-            window.history.replaceState(null, 'Inicio de Sesión', '/TICKET_UCAD/inicio-sesion');
+        if (window.location.pathname !== '/TICKETUCAD/inicio-sesion') {
+            window.history.replaceState(null, 'Inicio de Sesión', '/TICKETUCAD/inicio-sesion');
         }
-
-        // Toggle contraseña con checkbox
-        document.getElementById('showPass').addEventListener('change', function () {
-            document.getElementById('password').type = this.checked ? 'text' : 'password';
-        });
-
-        // Submit
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Aquí va tu lógica de autenticación
-        });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/TICKETUCAD/app/controllers/login/login.js"></script>
 </body>
 </html>
