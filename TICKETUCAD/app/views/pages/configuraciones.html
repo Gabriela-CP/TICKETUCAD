@@ -7,6 +7,197 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <style>
+        /* === Variables del tema === */
+        :root {
+            --primary:  #083466;
+            --accent:   #ec5b13;
+            --bg-dark:  #061421;
+            --surface:  #0a1d2e;
+            --border:   rgba(8, 52, 102, 0.3);
+        }
+
+        /* === Base === */
+        body {
+            font-family: 'Public Sans', sans-serif;
+            background: linear-gradient(160deg, #000000 0%, #000d1f 25%, #083466 70%, #0a1d2e 100%);
+            background-attachment: fixed;
+            background-size: cover;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* === Top Nav === */
+        .top-nav {
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+        }
+        .nav-brand { color: #f1f5f9; font-size: 1.1rem; font-weight: 700; }
+
+        /* === Brand icon === */
+        .brand-icon {
+            background-color: var(--primary);
+            border-radius: 0.5rem;
+            padding: 6px 8px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* === Buscador === */
+        .search-wrapper { position: relative; }
+        .search-wrapper .fa-search {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 13px;
+        }
+        .search-input {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border);
+            color: #e2e8f0;
+            border-radius: 0.5rem;
+            padding-left: 2.2rem;
+        }
+        .search-input::placeholder { color: #64748b; }
+        .search-input:focus {
+            background-color: var(--bg-dark);
+            border-color: var(--primary);
+            color: #e2e8f0;
+            box-shadow: 0 0 0 2px rgba(8,52,102,0.4);
+        }
+
+        /* === Botones nav === */
+        .btn-light {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border);
+            color: #94a3b8;
+        }
+        .btn-light:hover { background-color: rgba(8,52,102,0.2); color: #fff; }
+
+        /* === Main === */
+        main { padding: 2rem 0; }
+
+        /* === Títulos === */
+        .page-title  { font-size: 1.75rem; font-weight: 700; color: #f1f5f9; }
+        .page-subtitle { color: #64748b; font-size: 0.9rem; margin-top: 0.2rem; }
+
+        /* === Cards === */
+        .config-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        .card-header-custom {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--surface);
+        }
+        .card-header-custom h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .text-primary-custom { color: #93c5fd; }
+
+        /* === Botón agregar === */
+        .btn-primary-custom {
+            background-color: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.45rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            text-decoration: none;
+            transition: background-color 0.15s;
+        }
+        .btn-primary-custom:hover { background-color: #0a4a8a; color: #fff; text-decoration: none; }
+
+        /* === Botón link gestionar === */
+        .btn-link-custom {
+            color: #93c5fd;
+            font-weight: 700;
+            font-size: 0.85rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        .btn-link-custom:hover { text-decoration: underline; color: #60a5fa; }
+
+        /* === Tablas === */
+        .config-table { color: #e2e8f0; }
+        .config-table thead th {
+            background-color: rgba(8,52,102,0.25);
+            color: #93c5fd;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid var(--border);
+        }
+        .config-table td, .config-table th { border-color: var(--border); vertical-align: middle; padding: 0.85rem 1.25rem; }
+        .config-table tbody tr:hover { background-color: rgba(8,52,102,0.12); }
+        .config-table strong { color: #f1f5f9; }
+        .text-muted { color: #64748b !important; }
+
+        /* === Botones acción === */
+        .btn-action {
+            background: none;
+            border: none;
+            padding: 4px 6px;
+            cursor: pointer;
+            color: #64748b;
+            border-radius: 0.4rem;
+            transition: all 0.15s;
+        }
+        .btn-action.edit:hover  { background-color: rgba(8,52,102,0.2); color: #93c5fd; }
+        .btn-action.delete:hover { background-color: rgba(239,68,68,0.15); color: #f87171; }
+
+        /* === Badges prioridad === */
+        .badge-critica {
+            background-color: rgba(239,68,68,0.15);
+            color: #f87171;
+            border: 1px solid rgba(239,68,68,0.25);
+            font-size: 0.65rem; font-weight: 700;
+            padding: 3px 10px; border-radius: 9999px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .badge-alta {
+            background-color: rgba(249,115,22,0.15);
+            color: #fb923c;
+            border: 1px solid rgba(249,115,22,0.25);
+            font-size: 0.65rem; font-weight: 700;
+            padding: 3px 10px; border-radius: 9999px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+        .badge-baja {
+            background-color: rgba(59,130,246,0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59,130,246,0.25);
+            font-size: 0.65rem; font-weight: 700;
+            padding: 3px 10px; border-radius: 9999px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+
+        /* === Dots estado === */
+        .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+        .dot-green  { background-color: #4ade80; }
+        .dot-yellow { background-color: #fbbf24; }
+        .dot-gray   { background-color: #64748b; }
+    </style>
 </head>
 <body>
 
