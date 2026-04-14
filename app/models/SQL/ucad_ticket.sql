@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-04-2026 a las 17:16:27
+-- Tiempo de generación: 14-04-2026 a las 18:27:33
 -- Versión del servidor: 8.0.45
 -- Versión de PHP: 7.4.30
 
@@ -437,17 +437,17 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 DROP VIEW IF EXISTS `vista_tickets_activos`;
 CREATE TABLE IF NOT EXISTS `vista_tickets_activos` (
-`id` int
-,`titulo` varchar(255)
-,`descripcion` text
-,`usuario_id` int
-,`estado_id` int
-,`prioridad_id` int
-,`categoria_id` int
+`categoria_id` int
 ,`departamento_id` int
-,`fecha_creacion` timestamp
-,`fecha_actualizacion` timestamp
+,`descripcion` text
 ,`eliminado_en` timestamp
+,`estado_id` int
+,`fecha_actualizacion` timestamp
+,`fecha_creacion` timestamp
+,`id` int
+,`prioridad_id` int
+,`titulo` varchar(255)
+,`usuario_id` int
 );
 
 -- --------------------------------------------------------
