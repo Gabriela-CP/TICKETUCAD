@@ -20,4 +20,5 @@ try {
     // Si hay un error, detenemos el proceso y mostramos qué pasó
     die("Error de conexión a la base de datos: " . $e->getMessage());
 }
+// Ahora $pdo es tu conexión a la base de datos y puedes usarla para tus consultas
 ?>
