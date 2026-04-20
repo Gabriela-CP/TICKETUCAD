@@ -13,279 +13,71 @@
         html, body {
             width: 100%;
             height: 100%;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            min-height: 100vh;
             display: flex;
+            min-height: 100vh;
             background: #0a0f1e;
-            overflow: hidden;
         }
 
-        /* ── FONDO ANIMADO ── */
-        .bg-animated {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: radial-gradient(ellipse at 20% 50%, #0d2a6e22 0%, transparent 60%),
-                        radial-gradient(ellipse at 80% 20%, #1a4fa822 0%, transparent 55%),
-                        radial-gradient(ellipse at 60% 80%, #0b3d9122 0%, transparent 50%),
-                        #0a0f1e;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.35;
-            animation: float 8s ease-in-out infinite;
-        }
-        .orb-1 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, #1e5fd4, #0a2a7a);
-            top: -150px; left: -100px;
-            animation-delay: 0s;
-        }
-        .orb-2 {
-            width: 400px; height: 400px;
-            background: radial-gradient(circle, #0e3fa8, #071e5c);
-            bottom: -100px; right: 30%;
-            animation-delay: 3s;
-        }
-        .orb-3 {
-            width: 300px; height: 300px;
-            background: radial-gradient(circle, #2563eb, #1040a0);
-            top: 40%; right: -80px;
-            animation-delay: 5s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50%       { transform: translateY(-30px) scale(1.05); }
-        }
-
-        /* ── GRID PRINCIPAL ── */
+        /* ── LAYOUT ── */
         .layout {
-            position: relative;
-            z-index: 1;
             display: grid;
-            grid-template-columns: 1fr 420px;
+            grid-template-columns: 420px 1fr;
             width: 100%;
             min-height: 100vh;
         }
 
-        /* ── PANEL IZQUIERDO (info) ── */
-        .panel-info {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Sección superior: logo + texto */
-        .panel-top {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 48px 60px 32px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 44px;
-        }
-
-        .brand-logo {
-            width: 64px;
-            height: 64px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 12px rgba(77,159,255,0.45));
-            flex-shrink: 0;
-        }
-
-        .brand-text .brand-name {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: 1px;
-            line-height: 1.1;
-        }
-
-        .brand-text .brand-sub {
-            font-size: 12px;
-            color: #4d7aaa;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-top: 3px;
-        }
-
-        .info-headline {
-            font-size: 40px;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1.18;
-            margin-bottom: 16px;
-        }
-
-        .info-headline span {
-            background: linear-gradient(90deg, #4d9fff, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .info-sub {
-            font-size: 14px;
-            color: #5a7a9a;
-            line-height: 1.75;
-            max-width: 380px;
-            margin-bottom: 36px;
-        }
-
-        .stats-row {
-            display: flex;
-            gap: 28px;
-        }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .stat-num {
-            font-size: 26px;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: #3a5a7a;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .stat-divider {
-            width: 1px;
-            background: #1a2d4a;
-            align-self: stretch;
-        }
-
-        /* Video panorámico en la parte inferior */
-        .video-banner {
-            height: 220px;
-            position: relative;
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .video-banner video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .video-banner-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                #0a0f1e 0%,
-                rgba(10,15,30,0.5) 30%,
-                rgba(10,15,30,0.2) 60%,
-                rgba(10,15,30,0.6) 100%
-            );
-        }
-
-        .video-banner-label {
-            position: absolute;
-            bottom: 20px;
-            left: 28px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .video-banner-label .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #4d9fff;
-            box-shadow: 0 0 8px #4d9fff;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50%       { opacity: 0.5; transform: scale(1.3); }
-        }
-
-        .video-banner-label span {
-            font-size: 12px;
-            color: rgba(255,255,255,0.6);
-            letter-spacing: 0.5px;
-        }
-
-        /* ── PANEL DERECHO (form) ── */
+        /* ── PANEL IZQUIERDO (formulario) ── */
         .panel-form {
-            width: 420px;
-            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 44px;
+            background: rgba(10, 18, 40, 0.97);
+            border-right: 1px solid rgba(255,255,255,0.07);
+            position: relative;
+            z-index: 2;
+        }
+
+        .avatar-wrap {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(77,159,255,0.4);
+            box-shadow: 0 0 24px rgba(37,99,235,0.2), inset 0 0 20px rgba(10,18,40,0.6);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 40px;
-            background: rgba(15, 25, 50, 0.85);
-            border-left: 1px solid rgba(255,255,255,0.1);
-            backdrop-filter: blur(24px);
-            box-shadow: -8px 0 40px rgba(0,0,0,0.4);
+            margin-bottom: 32px;
+            background: rgba(10,18,40,0.85);
+        }
+
+        .avatar-wrap img {
+            width: 58px;
+            height: 58px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(77,159,255,0.5));
         }
 
         .form-inner {
             width: 100%;
         }
 
-        .form-header {
-            margin-bottom: 28px;
-        }
-
-        .form-header h2 {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 6px;
-        }
-
-        .form-header p {
-            font-size: 13px;
-            color: #7a90aa;
-        }
-
         /* Campos */
         .field-group {
-            margin-bottom: 14px;
-        }
-
-        .field-label {
-            display: block;
-            font-size: 12px;
-            font-weight: 600;
-            color: #6d9acc;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
         }
 
         .field-wrap {
             position: relative;
         }
 
-        .field-wrap i {
+        .field-wrap > i {
             position: absolute;
             left: 16px;
             top: 50%;
@@ -296,39 +88,34 @@
             transition: color 0.2s;
         }
 
-        .field-wrap input,
-        .field-wrap select {
+        .field-wrap input {
             width: 100%;
-            background: rgba(255,255,255,0.07);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 10px;
-            padding: 13px 16px 13px 44px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            padding: 13px 44px 13px 44px;
             color: #fff;
-            font-size: 14px;
+            font-size: 13px;
             font-family: 'Inter', sans-serif;
             outline: none;
             transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-            appearance: none;
-            -webkit-appearance: none;
+            letter-spacing: 0.5px;
         }
 
-        .field-wrap input::placeholder { color: #4a6a8a; }
-
-        .field-wrap select option {
-            background: #0d1b35;
-            color: #fff;
+        .field-wrap input::placeholder {
+            color: #3a5a7a;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
         }
 
-        .field-wrap input:focus,
-        .field-wrap select:focus {
+        .field-wrap input:focus {
             border-color: #2563eb;
             background: rgba(37,99,235,0.06);
             box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
         }
 
-        .field-wrap:focus-within i {
-            color: #4d9fff;
-        }
+        .field-wrap:focus-within > i { color: #4d9fff; }
 
         /* Toggle password */
         .toggle-pass {
@@ -346,57 +133,25 @@
         }
         .toggle-pass:hover { color: #4d9fff; }
 
-        /* Opciones */
-        .form-options {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 4px 0 20px;
-        }
-
-        .check-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            color: #7a90aa;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .check-label input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: #2563eb;
-            cursor: pointer;
-        }
-
         /* Botón */
         .btn-submit {
             width: 100%;
             padding: 14px;
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             background: linear-gradient(135deg, #1e5fd4, #2563eb);
             color: #fff;
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             font-family: 'Inter', sans-serif;
-            letter-spacing: 0.5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             transition: transform 0.15s, box-shadow 0.2s;
             box-shadow: 0 4px 24px rgba(37,99,235,0.4);
-        }
-
-        .btn-submit::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
-            opacity: 0;
-            transition: opacity 0.2s;
+            margin-top: 8px;
         }
 
         .btn-submit:hover {
@@ -404,198 +159,311 @@
             box-shadow: 0 8px 32px rgba(37,99,235,0.55);
         }
 
-        .btn-submit:hover::before { opacity: 1; }
         .btn-submit:active { transform: translateY(0); }
 
-        .btn-submit .btn-icon {
-            margin-left: 8px;
-            transition: transform 0.2s;
+        /* ── PANEL DERECHO (visual) ── */
+        .panel-info {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0;
         }
 
-        .btn-submit:hover .btn-icon {
-            transform: translateX(4px);
+        /* Fondo animado */
+        .bg-animated {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at 20% 50%, #0d2a6e33 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, #1a4fa833 0%, transparent 55%),
+                        radial-gradient(ellipse at 60% 80%, #0b3d9133 0%, transparent 50%),
+                        #0a0f1e;
         }
 
-        /* Separador */
-        .divider {
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 8s ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, #1e5fd4, #0a2a7a);
+            top: -150px; right: -100px;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, #0e3fa8, #071e5c);
+            bottom: -100px; left: 10%;
+            animation-delay: 3s;
+        }
+        .orb-3 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, #2563eb, #1040a0);
+            top: 40%; left: 50%;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50%       { transform: translateY(-30px) scale(1.05); }
+        }
+
+        /* Video de fondo */
+        .video-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.25;
+        }
+
+        .video-bg-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                rgba(10,15,30,0.6) 0%,
+                rgba(10,15,30,0.1) 100%
+            );
+        }
+
+        /* Contenido del panel derecho */
+        .panel-info-content {
+            position: relative;
+            z-index: 2;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 48px;
+            height: 100%;
+        }
+
+        .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin: 24px 0;
-            color: #1e3050;
-            font-size: 12px;
-        }
-        .divider::before, .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: rgba(255,255,255,0.06);
+            gap: 14px;
         }
 
-        /* Footer del form */
-        .form-footer {
-            text-align: center;
-            margin-top: 16px;
+        .brand-logo {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 12px rgba(77,159,255,0.45));
         }
 
-        .form-footer p {
-            font-size: 12px;
-            color: #4a6a8a;
+        .brand-text .brand-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1px;
         }
 
-        /* Indicador de seguridad */
-        .security-badge {
+        .brand-text .brand-sub {
+            font-size: 11px;
+            color: #4d7aaa;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .welcome-block {
+            margin-bottom: 0;
+        }
+
+        .welcome-block h1 {
+            font-size: 56px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        .welcome-block h1 span {
+            background: linear-gradient(90deg, #4d9fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-block p {
+            font-size: 14px;
+            color: #5a7a9a;
+            line-height: 1.75;
+            max-width: 400px;
+            margin-bottom: 36px;
+        }
+
+        .stats-row {
             display: flex;
+            gap: 32px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-num {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #3a5a7a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-divider {
+            width: 1px;
+            background: #1a2d4a;
+            align-self: stretch;
+        }
+
+        /* Live badge */
+        .live-badge {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(37,99,235,0.08);
-            border: 1px solid rgba(37,99,235,0.15);
-            border-radius: 8px;
-            padding: 10px 14px;
-            margin-top: 16px;
+            background: rgba(37,99,235,0.12);
+            border: 1px solid rgba(37,99,235,0.2);
+            border-radius: 50px;
+            padding: 8px 16px;
+            margin-bottom: 28px;
         }
 
-        .security-badge i {
-            color: #4d9fff;
-            font-size: 14px;
+        .live-badge .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #4d9fff;
+            box-shadow: 0 0 8px #4d9fff;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .security-badge span {
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .live-badge span {
             font-size: 12px;
-            color: #4d7aaa;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: 0.5px;
         }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 900px) {
             .panel-info { display: none; }
             .layout { grid-template-columns: 1fr; }
-            .panel-form {
-                width: 100%;
-                border-left: none;
-            }
+            .panel-form { width: 100%; border-right: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-animated">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
-
     <div class="layout">
 
-        <!-- Panel izquierdo -->
+        <!-- Panel izquierdo: formulario -->
+        <div class="panel-form">
+
+            <div class="avatar-wrap">
+                <img src="/TICKETUCAD/media/img/logo.png" alt="Logo UCAD">
+            </div>
+
+            <div class="form-inner">
+                <form id="loginForm" action="#" method="post">
+
+                    <div class="field-group">
+                        <div class="field-wrap">
+                            <i class="bi bi-person-fill"></i>
+                            <input type="text" id="usuario" name="usuario" placeholder="Username" required>
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <div class="field-wrap">
+                            <i class="bi bi-lock-fill"></i>
+                            <input type="password" id="password" name="password" placeholder="••••••••••" required>
+                            <button type="button" class="toggle-pass" id="togglePass" tabindex="-1">
+                                <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Login</button>
+
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Panel derecho: visual -->
         <div class="panel-info">
 
-            <div class="panel-top">
+            <div class="bg-animated">
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="orb orb-3"></div>
+            </div>
+
+            <div class="video-bg">
+                <video autoplay muted loop playsinline>
+                    <source src="/TICKETUCAD/media/video/vid1.mp4" type="video/mp4">
+                </video>
+                <div class="video-bg-overlay"></div>
+            </div>
+
+            <div class="panel-info-content">
                 <div class="brand">
-                    <img src="/TICKETUCAD/media/img/logo.png" alt="Logo" class="brand-logo">
+                    
                     <div class="brand-text">
                         <div class="brand-name">TICKET UCAD</div>
                         <div class="brand-sub">Soporte IT</div>
                     </div>
                 </div>
 
-                <h1 class="info-headline">
-                    Gestión avanzada y <br>resolución de incidentes<br><span>en tiempo real.</span>
-                </h1>
-
-                
-
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <span class="stat-num">99%</span>
-                        <span class="stat-label">Resolución</span>
+                <div class="welcome-block">
+                    <div class="live-badge">
+                        <div class="dot"></div>
+                        <span>Sistema activo en tiempo real</span>
                     </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-num">24/5</span>
-                        <span class="stat-label">Disponible</span>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-num">+500</span>
-                        <span class="stat-label">Tickets</span>
+                    <h1>Bienvenido<span>.</span></h1>
+                    <p>Gestión avanzada y resolución de incidentes en tiempo real. Accede para administrar y dar seguimiento a tus tickets de soporte.</p>
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <span class="stat-num">99%</span>
+                            <span class="stat-label">Resolución</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-num">24/5</span>
+                            <span class="stat-label">Disponible</span>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
 
-            <div class="video-banner">
-                <video autoplay muted loop playsinline>
-                    <source src="/TICKETUCAD/media/video/vid1.mp4" type="video/mp4">
-                </video>
-                <div class="video-banner-overlay"></div>
-                <div class="video-banner-label">
-                    <div class="dot"></div>
-                    <span>Sistema activo en tiempo real</span>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Panel derecho (formulario) -->
-        <div class="panel-form">
-            <div class="form-inner">
-
-                
-
-                <form id="loginForm" action="#" method="post">
-
-    
-
-                    <div class="field-group">
-                        <label class="field-label" for="rol">Rol</label>
-                        <div class="field-wrap">
-                            <i class="bi bi-shield-fill"></i>
-                            <select id="rol" name="rol" required>
-                                <option value="" disabled selected>Selecciona tu rol</option>
-                                <option value="agente_it">Agente IT</option>
-                                <option value="admin">Administrador</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="field-group">
-                        <label class="field-label" for="usuario">Usuario</label>
-                        <div class="field-wrap">
-                            <i class="bi bi-person-fill"></i>
-                            <input type="text" id="usuario" name="usuario" placeholder="Tu nombre de usuario" required>
-                        </div>
-                    </div>
-
-                    <div class="field-group">
-                        <label class="field-label" for="password">Contraseña</label>
-                        <div class="field-wrap">
-                            <i class="bi bi-lock-fill"></i>
-                            <input type="password" id="password" name="password" placeholder="••••••••" required>
-                        </div>
-                    </div>
-
-                    <div class="form-options">
-                        <label class="check-label">
-                            <input type="checkbox" id="showPass"> Ver contraseña
-                        </label>
-                    </div>
-
-                    <button type="submit" class="btn-submit">
-                        Iniciar sesión <i class="bi bi-arrow-right btn-icon"></i>
-                    </button>
-
-                </form>
-
-                <div class="form-footer">
-                    <p>&copy; 2026 Ticket UCAD. Todos los derechos reservados.</p>
-                </div>
-
-            </div>
         </div>
 
     </div>
 
     <script>
-        // URL amigable
         if (window.location.pathname !== '/TICKETUCAD/inicio-sesion') {
             window.history.replaceState(null, 'Inicio de Sesión', '/TICKETUCAD/inicio-sesion');
         }
