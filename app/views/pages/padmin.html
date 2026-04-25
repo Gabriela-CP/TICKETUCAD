@@ -201,28 +201,27 @@
 
     <nav class="sidebar-nav">
         <div class="nav-section">Principal</div>
-        <a href="#" class="nav-item active" data-view="dashboard">
-            <i class="bi bi-grid-1x2-fill"></i> Dashboard
+        <a href="#" class="nav-item active" data-view="inicio">
+            <i class="bi bi-house-fill"></i> Inicio
         </a>
         <a href="#" class="nav-item" data-view="tickets">
-            <i class="bi bi-ticket-detailed-fill"></i> Tickets
+            <i class="bi bi-ticket-detailed-fill"></i> Bandeja Tickets
             <span class="nav-badge" id="badge-tickets">12</span>
+        </a>
+        <a href="#" class="nav-item" data-view="abrir-tickets">
+            <i class="bi bi-ticket-detailed-fill"></i> Abrir Tickets
+            <span class="nav-badge">12</span>
+        </a>
+        <a href="#" class="nav-item" data-view="dashboard">
+            <i class="bi bi-grid-1x2-fill"></i> Dashboard
         </a>
 
         <div class="nav-section">Gestión</div>
         <a href="#" class="nav-item" data-view="usuarios">
-            <i class="bi bi-people-fill"></i> Usuarios
+            <i class="bi bi-people-fill"></i>Administracion Usuarios
         </a>
         <a href="#" class="nav-item" data-view="agentes">
-            <i class="bi bi-person-badge-fill"></i> Agentes IT
-        </a>
-        <a href="#" class="nav-item" data-view="categorias">
-            <i class="bi bi-tags-fill"></i> Categorías
-        </a>
-
-        <div class="nav-section">Sistema</div>
-        <a href="#" class="nav-item" data-view="reportes">
-            <i class="bi bi-bar-chart-fill"></i> Reportes
+            <i class="bi bi-person-badge-fill"></i>Reportes
         </a>
         <a href="#" class="nav-item" data-view="configuracion">
             <i class="bi bi-gear-fill"></i> Configuración
@@ -268,7 +267,7 @@
 
 <!-- ══ CONTENIDO PRINCIPAL ══ -->
 <div class="main-wrapper">
-    <div class="main-content">
+    <div class="main-content" id="main-content">
 
         <!-- Breadcrumb + título -->
         <div class="page-title">
@@ -506,9 +505,10 @@
 
 <script src="/TICKETUCAD/recursos/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Fecha actual
+    // Fecha actual en el dashboard
     const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
-    document.getElementById('fecha-hoy').textContent = new Date().toLocaleDateString('es-ES', opts);
+    const fechaEl = document.getElementById('fecha-hoy');
+    if (fechaEl) fechaEl.textContent = new Date().toLocaleDateString('es-ES', opts);
 
     // URL amigable
     if (window.location.pathname !== '/TICKETUCAD/panel-administrador') {
@@ -516,25 +516,67 @@
     }
 
     // Toggle sidebar móvil
-    const sidebar  = document.getElementById('sidebar');
+    const sidebar   = document.getElementById('sidebar');
     const btnToggle = document.getElementById('btnToggle');
     btnToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
 
-    // Cerrar sidebar al hacer click fuera (móvil)
     document.addEventListener('click', e => {
         if (window.innerWidth <= 768 && !sidebar.contains(e.target) && e.target !== btnToggle) {
             sidebar.classList.remove('open');
         }
     });
 
-    // Nav activo
+    // ── Carga dinámica de vistas ──────────────────────────────────────────────
+    const mainContent   = document.getElementById('main-content');
+    const dashboardHTML = mainContent.innerHTML; // guarda el dashboard original
+
+    const viewMap = {
+        inicio:       '/TICKETUCAD/app/views/pages/inicio.html',
+        usuarios:     '/TICKETUCAD/app/views/pages/usuarios.html',
+        reportes:     '/TICKETUCAD/app/views/pages/reportes.html',
+        configuracion:'/TICKETUCAD/app/views/pages/configuraciones.html',
+    };
+
+    async function cargarVista(view) {
+        if (view === 'dashboard') {
+            mainContent.innerHTML = dashboardHTML;
+            // re-inicializar fecha
+            const fEl = document.getElementById('fecha-hoy');
+            if (fEl) fEl.textContent = new Date().toLocaleDateString('es-ES', opts);
+            return;
+        }
+        const url = viewMap[view];
+        if (!url) return;
+        try {
+            const res  = await fetch(url);
+            const html = await res.text();
+            mainContent.innerHTML = html;
+            // ejecutar scripts embebidos en la vista cargada
+            mainContent.querySelectorAll('script').forEach(old => {
+                const s = document.createElement('script');
+                s.textContent = old.textContent;
+                old.replaceWith(s);
+            });
+        } catch(err) {
+            mainContent.innerHTML = `<div style="padding:40px;text-align:center;color:var(--text-muted)">
+                <i class="bi bi-exclamation-circle" style="font-size:40px;color:#f87171"></i>
+                <p style="margin-top:12px">No se pudo cargar la vista.</p></div>`;
+        }
+    }
+
+    // Nav activo + carga de vista
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', function(e) {
             e.preventDefault();
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
             this.classList.add('active');
+            const view = this.dataset.view;
+            if (view) cargarVista(view);
         });
     });
+
+    // Cargar "Inicio" al arrancar
+    cargarVista('inicio');
 
     // Pantalla completa
     document.getElementById('btnFullscreen').addEventListener('click', () => {
