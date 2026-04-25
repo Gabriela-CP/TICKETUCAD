@@ -19,9 +19,9 @@ if (empty($usuario) || empty($contrasena)) {
 }
 
 try {
-    // Buscar usuario activo junto con su rol
+ 
     $stmt = $pdo->prepare("
-        SELECT u.id, u.nombre, u.usuario, u.contraseña, u.estado, u.eliminado_en, r.nombre AS rol
+        SELECT u.id, u.nombre, u.usuario, u.contrasena_hash, u.estado, u.eliminado_en, r.nombre AS rol
         FROM usuarios u
         INNER JOIN roles r ON r.id = u.rol_id
         WHERE u.usuario = :usuario
@@ -32,10 +32,15 @@ try {
     $stmt->execute([':usuario' => $usuario]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user || !password_verify($contrasena, $user['contraseña'])) {
+    // 2. Actualizamos la variable aquí también
+
+    $contrasenaCorrecta = ($contrasena === $user['contrasena_hash']) || password_verify($contrasena, $user['contrasena_hash']);
+
+    if (!$user || !$contrasenaCorrecta) {
         echo json_encode(['success' => false, 'message' => 'Usuario o contraseña incorrectos.']);
         exit;
     }
+
 
     // Guardar sesión
     $_SESSION['usuario_id'] = $user['id'];
