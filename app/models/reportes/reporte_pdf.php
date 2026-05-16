@@ -1,13 +1,73 @@
 <?php
+// Validar los permisos del administrador
+require_once __DIR__ . "/auth_admin.php";
+
+// Cargar la libreria de mPDF y la conexion a la base de datos
 require_once __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . "/../php/conexion.php";
 
+// Obtener los datos enviados por el formulario usando el metodo POST
 $inicio = $_POST['h_inicio'] ?? '';
 $fin    = $_POST['h_fin'] ?? '';
 $tec    = $_POST['h_tecnico'] ?? '';
 $depto  = $_POST['h_depto'] ?? '';
 $estado = $_POST['h_estado'] ?? '';
 
+// Validar que las fechas de busqueda no esten vacias
+if (empty($inicio) || empty($fin)) {
+    ob_clean();
+    ?>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Exportación Inválida - Ticket UCAD</title>
+        <script src="/TICKETUCAD/recursos/libs/sweetalert2/sweetalert2.min.js"></script>
+        <style>
+            body { 
+                background-color: #0f172a; 
+                font-family: 'Segoe UI', system-ui, sans-serif; 
+                margin: 0; 
+                padding: 0; 
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '<span style="color: #ffffff; font-family: \'Segoe UI\', sans-serif;">Acción Inválida</span>',
+                    html: '<p style="color: #94a3b8; font-size: 14.5px; margin-bottom: 0; font-family: \'Segoe UI\', sans-serif;">Debe seleccionar un rango de fechas y presionar <b>"Generar Vista"</b> antes de poder exportar un reporte.</p>',
+                    confirmButtonColor: '#2563eb', 
+                    confirmButtonText: 'Entendido',
+                    background: '#111827', 
+                    color: '#fff',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then(() => {
+                    if (window.history.length > 1) {
+                        window.history.back();
+                    } else {
+                        window.close();
+                    }
+                });
+            });
+        </script>
+    </body>
+    </html>
+    <?php
+    exit;
+}
+
+// Limpiar las variables de texto para evitar errores en la consulta SQL
+$inicioEscaped = mysqli_real_escape_string($conexion, trim($inicio));
+$finEscaped    = mysqli_real_escape_string($conexion, trim($fin));
+$tecEscaped    = mysqli_real_escape_string($conexion, trim($tec));
+$deptoEscaped  = mysqli_real_escape_string($conexion, trim($depto));
+$estadoEscaped = mysqli_real_escape_string($conexion, trim($estado));
+
+// Consulta SQL principal con LEFT JOIN para recopilar la informacion de los tickets y calcular el SLA
 $sql = "SELECT 
             t.id AS id_ticket, 
             u.nombre AS tecnico_nombre, 
@@ -25,27 +85,78 @@ $sql = "SELECT
         LEFT JOIN sla_ticket sla ON t.id = sla.ticket_id
         WHERE t.eliminado_en IS NULL";
 
-if (!empty($inicio) && !empty($fin)) {
-    $sql .= " AND t.fecha_creacion BETWEEN '$inicio 00:00:00' AND '$fin 23:59:59'";
+// Agregar condiciones dinamicamente a la consulta si los campos contienen valores
+if (!empty($inicioEscaped) && !empty($finEscaped)) {
+    $sql .= " AND t.fecha_creacion BETWEEN '{$inicioEscaped} 00:00:00' AND '{$finEscaped} 23:59:59'";
 }
-if (!empty($tec)) {
-    $sql .= " AND t.asignado_a = '$tec'";
+if (!empty($tecEscaped)) {
+    $sql .= " AND t.asignado_a = '{$tecEscaped}'";
 }
-if (!empty($depto)) {
-    $sql .= " AND t.departamento_id = '$depto'";
+if (!empty($deptoEscaped)) {
+    $sql .= " AND t.departamento_id = '{$deptoEscaped}'";
 }
-if (!empty($estado)) {
-    $sql .= " AND est.nombre = '$estado'";
+if (!empty($estadoEscaped)) {
+    $sql .= " AND est.nombre = '{$estadoEscaped}'";
 }
 
+// Ordenar los registros por ID de forma descendente
 $sql .= " ORDER BY t.id DESC";
 
+// Ejecutar la consulta en la base de datos
 $resultado = mysqli_query($conexion, $sql);
 
 if (!$resultado) {
-    die("Error: " . mysqli_error($conexion));
+    die("Error en la consulta de impresión: " . mysqli_error($conexion));
 }
 
+// Validar si la consulta no trajo ningun registro para mostrar advertencia
+if (mysqli_num_rows($resultado) === 0) {
+    ob_clean();
+    ?>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Exportación Vacía - Ticket UCAD</title>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <style>
+            body { 
+                background-color: #0f172a; 
+                font-family: 'Segoe UI', system-ui, sans-serif; 
+                margin: 0; 
+                padding: 0; 
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '<span style="color: #ffffff; font-family: \'Segoe UI\', sans-serif;">Exportación Vacía</span>',
+                    html: '<p style="color: #94a3b8; font-size: 14.5px; margin-bottom: 0; font-family: \'Segoe UI\', sans-serif;">Debe seleccionar un rango de fechas y presionar <b>"Generar Vista"</b> antes de poder exportar un reporte.</p>',
+                    confirmButtonColor: '#2563eb', 
+                    confirmButtonText: 'Entendido',
+                    background: '#111827', 
+                    color: '#fff',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false
+                }).then(() => {
+                    if (window.history.length > 1) {
+                        window.history.back();
+                    } else {
+                        window.close();
+                    }
+                });
+            });
+        </script>
+    </body>
+    </html>
+    <?php
+    exit;
+}
+
+// Configurar el tamaño de pagina horizontal (A4-L) y los margenes del PDF
 $mpdf = new \Mpdf\Mpdf([
     'mode' => 'utf-8', 
     'format' => 'A4-L',
@@ -55,6 +166,7 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_right' => 15
 ]);
 
+// Crear el diseño general y estilos CSS del reporte en una variable HTML
 $html = '
 <style>
     body { font-family: "Helvetica", Arial, sans-serif; color: #1e293b; }
@@ -77,7 +189,7 @@ $html = '
 <div class="header">
     <div class="titulo">Universidad Cristiana de las Asambleas de Dios</div>
     <div class="subtitulo">Facultad de Ciencias Económicas · Soporte IT</div>
-    <div class="rango">PERIODO: ' . ($inicio ?: 'HISTÓRICO') . ' AL ' . ($fin ?: date('d/m/Y')) . '</div>
+    <div class="rango">PERIODO: ' . ($inicio ? htmlspecialchars($inicio, ENT_QUOTES, 'UTF-8') : 'HISTÓRICO') . ' AL ' . ($fin ? htmlspecialchars($fin, ENT_QUOTES, 'UTF-8') : date('d/m/Y')) . '</div>
 </div>
 
 <table>
@@ -93,7 +205,10 @@ $html = '
     </thead>
     <tbody>';
 
+// Recorrer las filas de la base de datos con un bucle while e introducirlas en la tabla
+$totalFilas = 0;
 while ($t = mysqli_fetch_assoc($resultado)) {
+    $totalFilas++;
     $timestamp = strtotime($t['fecha_creacion']);
     $meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
     $fechaFormateada = date("d ", $timestamp) . $meses[date("n", $timestamp)-1] . date(" Y, h:i A", $timestamp);
@@ -102,17 +217,19 @@ while ($t = mysqli_fetch_assoc($resultado)) {
     
     $html .= '<tr>
                 <td style="font-weight: bold;">#' . $t['id_ticket'] . '</td>
-                <td>' . ($t['tecnico_nombre'] ?? 'Sin asignar') . '</td>
-                <td>' . $t['departamento'] . '</td>
+                <td>' . htmlspecialchars($t['tecnico_nombre'] ?? 'Sin asignar', ENT_QUOTES, 'UTF-8') . '</td>
+                <td>' . htmlspecialchars($t['departamento'] ?? 'N/A', ENT_QUOTES, 'UTF-8') . '</td>
                 <td style="color: #475569;">' . $fechaFormateada . '</td>
-                <td><span class="badge-estado">' . strtoupper($t['estado']) . '</span></td>
-                <td class="'.$classSLA.'">' . $t['sla_status'] . '</td>
+                <td><span class="badge-estado">' . strtoupper(htmlspecialchars($t['estado'], ENT_QUOTES, 'UTF-8')) . '</span></td>
+                <td class="' . $classSLA . '">' . $t['sla_status'] . '</td>
               </tr>';
 }
 
 $html .= '</tbody></table>
-<div class="footer">Generado por Ticket UCAD el ' . date('d/m/Y h:i A') . '</div>';
+<div class="footer">Cantidad total de tickets: ' . $totalFilas . ' | Generado por Ticket UCAD el ' . date('d/m/Y h:i A') . '</div>';
 
+// Pasar el codigo HTML a mPDF y forzar la descarga del reporte
 $mpdf->WriteHTML($html);
 $mpdf->Output('Reporte_Ticket_UCAD.pdf', 'D');
 exit;
+?>

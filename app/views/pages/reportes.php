@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . "/../../models/reportes/auth_admin.php";
+?>
+
 <style>
     /* ── Estilos de integración con el Dashboard ── */
     .header-banner { 
@@ -29,6 +33,7 @@
         align-items: center;
         text-align: center;
         height: 100%;
+        cursor: pointer;
     }
 
     .stat-box:hover {
@@ -108,122 +113,122 @@
     .btn-generate:hover { background-color: #ffffff; transform: translateY(-2px); }
 
     /* Corrección para coherencia visual en los desplegables */
-.form-control-custom {
-    cursor: pointer;
-    appearance: none; /* Elimina estilos nativos para mayor control */
-}
+    .form-control-custom {
+        cursor: pointer;
+        appearance: none; /* Elimina estilos nativos para mayor control */
+    }
 
-/* Estilo para las opciones del menú desplegable */
-.form-control-custom option {
-    background-color: #111827 !important; /* Azul muy oscuro/negro sólido */
-    color: #ffffff !important;
-    padding: 10px;
-}
+    /* Estilo para las opciones del menú desplegable */
+    .form-control-custom option {
+        background-color: #111827 !important; /* Azul muy oscuro/negro sólido */
+        color: #ffffff !important;
+        padding: 10px;
+    }
 
-/* Ajuste para el icono del calendario en los inputs de fecha */
-input[type="date"].form-control-custom::-webkit-calendar-picker-indicator {
-    filter: invert(1); /* Cambia el icono negro por blanco */
-    opacity: 0.6;
-    cursor: pointer;
-}
+    /* Ajuste para el icono del calendario en los inputs de fecha */
+    input[type="date"].form-control-custom::-webkit-calendar-picker-indicator {
+        filter: invert(1); /* Cambia el icono negro por blanco */
+        opacity: 0.6;
+        cursor: pointer;
+    }
 
-input[type="date"].form-control-custom::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
-}
+    input[type="date"].form-control-custom::-webkit-calendar-picker-indicator:hover {
+        opacity: 1;
+    }
 
-/* Estilo para cuando el selector está enfocado */
-.form-control-custom:focus {
-    background-color: rgba(255,255,255,0.08) !important;
-    border-color: #2563eb !important;
-    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
-    outline: none;
-}
+    /* Estilo para cuando el selector está enfocado */
+    .form-control-custom:focus {
+        background-color: rgba(255,255,255,0.08) !important;
+        border-color: #2563eb !important;
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        outline: none;
+    }
 
-/* Estilos para el SLA en la tabla */
-.badge-sla-danger {
-    color: #ef4444;
-    background: rgba(239, 68, 68, 0.1);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    display: inline-block;
-    border: 1px solid rgba(239, 68, 68, 0.2);
-}
+    /* Estilos para el SLA en la tabla */
+    .badge-sla-danger {
+        color: #ef4444;
+        background: rgba(239, 68, 68, 0.1);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        display: inline-block;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
 
-.badge-sla-success {
-    color: #10b981;
-    background: rgba(16, 185, 129, 0.1);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 800;
-    display: inline-block;
-    border: 1px solid rgba(16, 185, 129, 0.2);
-}
+    .badge-sla-success {
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.1);
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        display: inline-block;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
 
-/* Avatar minimalista para técnicos */
-.avatar-mini {
-    width: 24px;
-    height: 24px;
-    background: #2563eb;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    font-weight: bold;
-    text-transform: uppercase;
-}
+    /* Avatar minimalista para técnicos */
+    .avatar-mini {
+        width: 24px;
+        height: 24px;
+        background: #2563eb;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
 
-input[type="date"].form-control-custom {
-    color-scheme: dark; /* Esto le dice al navegador que use el picker oscuro nativo */
-    background-color: #1f2937 !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-    padding: 0.6rem 1rem;
-    border-radius: 10px;
-    cursor: pointer;
-}
+    input[type="date"].form-control-custom {
+        color-scheme: dark; /* Esto le dice al navegador que use el picker oscuro nativo */
+        background-color: #1f2937 !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+        padding: 0.6rem 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+    }
 
-/* Asegurar que el icono del calendario sea blanco */
-input[type="date"].form-control-custom::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    opacity: 0.7;
-    cursor: pointer;
-}
+    /* Asegurar que el icono del calendario sea blanco */
+    input[type="date"].form-control-custom::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+        opacity: 0.7;
+        cursor: pointer;
+    }
 
-input[type="date"].form-control-custom::-webkit-calendar-picker-indicator:hover {
-    opacity: 1;
-}
+    input[type="date"].form-control-custom::-webkit-calendar-picker-indicator:hover {
+        opacity: 1;
+    }
 
-/* Estilo para los títulos de los filtros que se ven en image_e64443.png */
-.text-muted {
-    color: #94a3b8 !important; /* Gris azulado para que no se pierda */
-    font-size: 0.85rem;
-    font-weight: 600;
-    margin-bottom: 5px;
-    display: inline-block;
-}
+    /* Estilo para los títulos de los filtros que se ven en image_e64443.png */
+    .text-muted {
+        color: #94a3b8 !important; /* Gris azulado para que no se pierda */
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: inline-block;
+    }
 
-/* El separador azul al lado de RANGO DE FECHAS */
-.section-label::before { 
-    content: ""; 
-    display: inline-block; 
-    width: 3px; 
-    height: 15px; 
-    background: #2563eb; 
-    margin-right: 10px; 
-    vertical-align: middle;
-    border-radius: 4px;
-}
+    /* El separador azul al lado de RANGO DE FECHAS */
+    .section-label::before { 
+        content: ""; 
+        display: inline-block; 
+        width: 3px; 
+        height: 15px; 
+        background: #2563eb; 
+        margin-right: 10px; 
+        vertical-align: middle;
+        border-radius: 4px;
+    }
 </style>
 
-<div class="container-fluid py-4">
+<div class="container-fluid py-4" id="moduloReportesCompleto">
     <div class="header-banner d-flex justify-content-between align-items-center flex-wrap shadow-sm">
         <div>
-            <h2 class="mb-0 font-weight-bold text-white">Reportes del Sistema</h2>
+            <h2 class="mb-0 font-weight-bold text-white">Reportes del Sistema - Ticket UCAD</h2>
             <p class="mb-0 small text-muted">TICKET UCAD</p>
         </div>
         <div class="mt-2 mt-md-0">
@@ -334,6 +339,10 @@ input[type="date"].form-control-custom::-webkit-calendar-picker-indicator:hover 
         <form id="formExportar" action="/TICKETUCAD/app/models/reportes/reporte_pdf.php" method="POST" target="_blank" class="d-flex align-items-center w-100">
             <input type="hidden" name="h_inicio" id="h_inicio">
             <input type="hidden" name="h_fin" id="h_fin">
+            <input type="hidden" name="h_tecnico" id="h_tecnico">
+            <input type="hidden" name="h_depto" id="h_depto">
+            <input type="hidden" name="h_estado" id="h_estado">
+            
             <div class="d-flex align-items-center">
                 <label class="mb-0 mr-3 small font-weight-bold text-muted">FORMATO:</label>
                 <select name="formato_export" class="form-control form-control-sm form-control-custom" style="width: 140px;">

@@ -1,51 +1,62 @@
 <?php
-// Cabecera para que el JS reconozca la respuesta
-header('Content-Type: application/json');
+// Limpiar el buffer de salida y definir que la respuesta sera un JSON
+ob_start();
+header('Content-Type: application/json; charset=utf-8');
+ini_set('display_errors', 0);
+error_reporting(E_ALL);
 
-// Conexion a la base de datos
-require_once(__DIR__ . "/../php/conexion.php");
+// Validar que el usuario sea administrador antes de continuar
+require_once __DIR__ . "/auth_admin.php";
 
-// Validar conexion
+// Incluir el archivo de conexion a la base de datos
+require_once __DIR__ . "/../php/conexion.php";
+
+// Validar si la conexion con MySQLi fallo
 if (!$conexion) {
-    echo json_encode(['status' => 'error', 'message' => 'No se pudo conectar a la base de datos']);
+    ob_clean();
+    echo json_encode(['status' => 'error', 'message' => 'Error de infraestructura: No se pudo conectar a la base de datos']);
     exit;
 }
 
-// Arreglos para guardar los datos
+// Arreglos vacios para almacenar la informacion de las consultas
 $tecnicos = [];
 $deptos = [];
 $estados = [];
 
-// 1. Cargar Tecnicos (Rol 2)
-$res_tec = mysqli_query($conexion, "SELECT id, nombre FROM usuarios WHERE rol_id = 2");
+// Cargar la lista de los tecnicos (usuarios con rol_id igual a 2)
+$res_tec = mysqli_query($conexion, "SELECT id, nombre FROM usuarios WHERE rol_id = 2 ORDER BY nombre ASC");
 if ($res_tec) {
     while ($row = mysqli_fetch_assoc($res_tec)) {
         $tecnicos[] = $row;
     }
+    mysqli_free_result($res_tec); // Liberar memoria del resultado de tecnicos
 }
 
-// 2. Cargar Departamentos
-$res_dep = mysqli_query($conexion, "SELECT id, nombre FROM departamentos");
+// Cargar la lista de todos los departamentos
+$res_dep = mysqli_query($conexion, "SELECT id, nombre FROM departamentos ORDER BY nombre ASC");
 if ($res_dep) {
     while ($row = mysqli_fetch_assoc($res_dep)) {
         $deptos[] = $row;
     }
+    mysqli_free_result($res_dep); // Liberar memoria del resultado de departamentos
 }
 
-// 3. Cargar Estados de ticket
-$res_est = mysqli_query($conexion, "SELECT nombre FROM estados_ticket");
+// Cargar la lista de los estados disponibles para los tickets
+$res_est = mysqli_query($conexion, "SELECT nombre FROM estados_ticket ORDER BY id ASC");
 if ($res_est) {
     while ($row = mysqli_fetch_assoc($res_est)) {
         $estados[] = $row;
     }
+    mysqli_free_result($res_est); // Liberar memoria del resultado de estados
 }
 
-// Mandar todo en un solo JSON
+// Limpiar cualquier salida anterior y enviar los datos cargados en formato JSON
+ob_clean();
 echo json_encode([
     'status' => 'success',
     'tecnicos' => $tecnicos,
     'departamentos' => $deptos,
     'estados' => $estados
 ]);
-
 exit;
+?>

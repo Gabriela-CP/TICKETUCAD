@@ -1,27 +1,38 @@
 <?php
-// Evitar que salgan errores raros en el json
+// Limpiar el buffer de salida y definir la respuesta como JSON
 ob_start();
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 ini_set('display_errors', 0);
 error_reporting(E_ALL);
 
-// Incluimos la conexion normal
-require_once(__DIR__ . "/../php/conexion.php");
+// Validar que el usuario sea administrador antes de continuar
+require_once __DIR__ . "/auth_admin.php";
 
-// Validar si la conexion existe (usando la variable de conexion.php)
+// Incluir el archivo de conexion a la base de datos
+require_once __DIR__ . "/../php/conexion.php";
+
+// Validar si la conexion con la base de datos fallo
 if (!$conexion) {
-    echo json_encode(['status' => 'error', 'message' => 'No hay conexion a la base']);
+    ob_clean();
+    echo json_encode(['status' => 'error', 'message' => 'Error crítico: No se pudo establecer conexión con el servidor de base de datos.']);
     exit;
 }
 
-// Capturar los filtros de la URL
-$inicio = isset($_GET['inicio']) ? $_GET['inicio'] : '';
-$fin    = isset($_GET['fin']) ? $_GET['fin'] : '';
-$tec    = isset($_GET['tecnico']) ? $_GET['tecnico'] : '';
-$depto  = isset($_GET['departamento']) ? $_GET['departamento'] : '';
-$estado_filtro = isset($_GET['estado']) ? $_GET['estado'] : '';
+// Capturar los filtros enviados por el metodo GET desde la URL
+$inicio        = isset($_GET['inicio']) ? trim($_GET['inicio']) : '';
+$fin           = isset($_GET['fin']) ? trim($_GET['fin']) : '';
+$tec           = isset($_GET['tecnico']) ? trim($_GET['tecnico']) : '';
+$depto         = isset($_GET['departamento']) ? trim($_GET['departamento']) : '';
+$estado_filtro = isset($_GET['estado']) ? trim($_GET['estado']) : '';
 
-// Consulta para unir las tablas y sacar los nombres
+// Limpiar los parametros recibidos para evitar inyeccion SQL en MySQLi
+$inicioEscaped = mysqli_real_escape_string($conexion, $inicio);
+$finEscaped    = mysqli_real_escape_string($conexion, $fin);
+$tecEscaped    = mysqli_real_escape_string($conexion, $tec);
+$deptoEscaped  = mysqli_real_escape_string($conexion, $depto);
+$estEscaped    = mysqli_real_escape_string($conexion, $estado_filtro);
+
+// Consulta SQL con LEFT JOINs para obtener los datos detallados de los tickets y evaluar el estado del SLA
 $sql = "SELECT 
             t.id AS id_ticket, 
             u.nombre AS tecnico_nombre, 
@@ -40,44 +51,48 @@ $sql = "SELECT
         LEFT JOIN sla_ticket sla ON t.id = sla.ticket_id
         WHERE t.eliminado_en IS NULL";
 
-// Aplicar filtros segun lo que venga por GET
-if ($inicio != '' && $fin != '') {
-    $sql .= " AND t.fecha_creacion BETWEEN '$inicio 00:00:00' AND '$fin 23:59:59'";
+// Agregar condiciones a la consulta segun los filtros seleccionados
+if ($inicioEscaped != '' && $finEscaped != '') {
+    $sql .= " AND t.fecha_creacion BETWEEN '{$inicioEscaped} 00:00:00' AND '{$finEscaped} 23:59:59'";
 }
 
-if ($tec != '') { 
-    $sql .= " AND t.asignado_a = '$tec'"; 
+if ($tecEscaped != '') { 
+    $sql .= " AND t.asignado_a = '{$tecEscaped}'"; 
 }
 
-if ($depto != '') { 
-    $sql .= " AND t.departamento_id = '$depto'"; 
+if ($deptoEscaped != '') { 
+    $sql .= " AND t.departamento_id = '{$deptoEscaped}'"; 
 }
 
-if ($estado_filtro != '') { 
-    $sql .= " AND est.nombre = '$estado_filtro'"; 
+if ($estEscaped != '') { 
+    $sql .= " AND est.nombre = '{$estEscaped}'"; 
 }
 
+// Ordenar los resultados por ID en forma descendente
 $sql .= " ORDER BY t.id DESC";
 
-// Ejecutar con mysqli
+// Ejecutar la consulta SQL en la base de datos
 $query = mysqli_query($conexion, $sql);
 
 if (!$query) {
-    echo json_encode(['status' => 'error', 'message' => mysqli_error($conexion)]);
+    ob_clean();
+    echo json_encode(['status' => 'error', 'message' => 'Falla en la consulta: ' . mysqli_error($conexion)]);
     exit;
 }
 
 $tickets = [];
 $stats = ['total' => 0, 'resueltos' => 0, 'pendientes' => 0, 'vencidos' => 0];
 
-// Sacar los datos y armar las estadisticas
+// Recorrer los registros devueltos para guardarlos en el arreglo e incrementar los contadores
 while ($row = mysqli_fetch_assoc($query)) {
+    // Validar si el ticket ya esta finalizado o sigue abierto
     if ($row['es_final'] == 1) {
         $stats['resueltos']++;
     } else {
         $stats['pendientes']++;
     }
     
+    // Validar si el ticket ya sobrepaso el tiempo limite del SLA
     if ($row['sla_status'] === 'VENCIDO') {
         $stats['vencidos']++;
     }
@@ -85,9 +100,10 @@ while ($row = mysqli_fetch_assoc($query)) {
     $tickets[] = $row;
 }
 
+// Contar el total de tickets encontrados
 $stats['total'] = count($tickets);
 
-// Mandar todo a la vista
+// Limpiar el buffer y devolver los datos en formato JSON para el frontend
 ob_clean();
 echo json_encode([
     'status' => 'success', 
@@ -95,3 +111,4 @@ echo json_encode([
     'stats' => $stats
 ]);
 exit;
+?>
