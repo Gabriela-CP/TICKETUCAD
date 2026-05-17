@@ -1,4 +1,5 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 require("../php/conexion.php");
 
@@ -23,17 +24,34 @@ try {
     $password_temporal = 'UCAD' . rand(1000, 9999);
     $hash = password_hash($password_temporal, PASSWORD_BCRYPT);
 
-    $nombre_e   = mysqli_real_escape_string($con, $nombre);
-    $correo_e   = mysqli_real_escape_string($con, $correo);
-    $usuario_e  = mysqli_real_escape_string($con, $usuario);
-    $hash_e     = mysqli_real_escape_string($con, $hash);
+    $nombre_e   = mysqli_real_escape_string($conexion, $nombre);
+    $correo_e   = mysqli_real_escape_string($conexion, $correo);
+    $usuario_e  = mysqli_real_escape_string($conexion, $usuario);
+    $hash_e     = mysqli_real_escape_string($conexion, $hash);
 
     $sql = "INSERT INTO usuarios (nombre, correo, usuario, contrasena_hash, rol_id, estado, cambiar_password)
-        VALUES ('$nombre_e', '$correo_e', '$usuario_e', '$hash_e', $rol_id, 'activo', 1)";
+    VALUES ('$nombre_e', '$correo_e', '$usuario_e', '$hash_e', $rol_id, 'activo', 1)";
 
-    $resultado = mysqli_query($con, $sql);
+$resultado = mysqli_query($conexion, $sql);
 
-    if($resultado){
+if ($resultado) {
+    // ── Registrar en bitácora ──
+    $nuevo_id    = mysqli_insert_id($conexion);
+    $id_admin    = $_SESSION['usuario_id'] ?? null;
+    $admin_user  = $_SESSION['usuario']    ?? 'sistema';
+    $ip          = $_SERVER['REMOTE_ADDR'] ?? '';
+
+    mysqli_query($conexion, "CALL sp_registrar_accion(
+        $id_admin,
+        '$admin_user',
+        '$ip',
+        'INSERT',
+        'usuarios',
+        'usuario',
+        NULL,
+        '$usuario_e'
+    )");
+
         $response = array('success'=>true, 'msg'=>'Usuario creado exitosamente', 'password_temporal'=>$password_temporal);
     }else{
         $response = array('success'=>false, 'error'=>'No se pudo crear el usuario');

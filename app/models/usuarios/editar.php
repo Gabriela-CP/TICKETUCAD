@@ -1,4 +1,5 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 require("../php/conexion.php");
 
@@ -18,17 +19,22 @@ try {
     }
 
     if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+
+    
         echo json_encode(array('success'=>false, 'error'=>'El correo no es válido'));
         exit();
     }
-
-    $nombre_e  = mysqli_real_escape_string($con, $nombre);
-    $correo_e  = mysqli_real_escape_string($con, $correo);
-    $usuario_e = mysqli_real_escape_string($con, $usuario);
+        // ── Capturar valores ANTES del UPDATE ──
+    $sql_antes = "SELECT nombre, correo, usuario, rol_id FROM usuarios WHERE id=$id";
+    $res_antes = mysqli_query($conexion, $sql_antes);
+    $row_antes = mysqli_fetch_assoc($res_antes);
+    $nombre_e  = mysqli_real_escape_string($conexion, $nombre);
+    $correo_e  = mysqli_real_escape_string($conexion, $correo);
+    $usuario_e = mysqli_real_escape_string($conexion, $usuario);
 
     if ($password !== '') {
         $hash = password_hash($password, PASSWORD_BCRYPT);
-        $hash_e = mysqli_real_escape_string($con, $hash);
+        $hash_e = mysqli_real_escape_string($conexion, $hash);
         $sql = "UPDATE usuarios
                 SET nombre='$nombre_e', correo='$correo_e', usuario='$usuario_e',
                     contrasena_hash='$hash_e', rol_id=$rol_id
@@ -39,9 +45,40 @@ try {
                 WHERE id=$id AND eliminado_en IS NULL";
     }
 
-    $resultado = mysqli_query($con, $sql);
+    $resultado = mysqli_query($conexion, $sql);
 
     if($resultado){
+        // ── Registrar en bitácora (solo campos que cambiaron) ──
+        $id_admin    = $_SESSION['usuario_id'] ?? null;
+        $admin_user  = $_SESSION['usuario']    ?? 'sistema';
+        $ip          = $_SERVER['REMOTE_ADDR'] ?? '';
+
+        $cambios = [
+            'nombre'  => [$row_antes['nombre'],  $nombre],
+            'correo'  => [$row_antes['correo'],  $correo],
+            'usuario' => [$row_antes['usuario'], $usuario],
+            'rol_id'  => [$row_antes['rol_id'],  $rol_id]
+        ];
+
+        foreach ($cambios as $campo => $valores) {
+            $antes   = $valores[0];
+            $despues = $valores[1];
+            if ($antes != $despues) {
+                $antes_e   = mysqli_real_escape_string($conexion, $antes);
+                $despues_e = mysqli_real_escape_string($conexion, $despues);
+                mysqli_query($conexion, "CALL sp_registrar_accion(
+                    $id_admin,
+                    '$admin_user',
+                    '$ip',
+                    'UPDATE',
+                    'usuarios',
+                    '$campo',
+                    '$antes_e',
+                    '$despues_e'
+                )");
+            }
+        }
+
         $response = array('success'=>true, 'msg'=>'Usuario actualizado exitosamente');
     }else{
         $response = array('success'=>false, 'error'=>'No se pudo actualizar el usuario');
